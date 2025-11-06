@@ -14,9 +14,9 @@
         </header>
 
         <nav class="navigation">
-            <button class="nav-btn active" onclick="showSection('home')">🏠 Home</button>
-            <button class="nav-btn" onclick="showSection('searching')">🔍 Searching</button>
-            <button class="nav-btn" onclick="showSection('sorting')">🔢 Sorting</button>
+            <button class="nav-btn active" onclick="showSection('home', this)">🏠 Home</button>
+            <button class="nav-btn" onclick="showSection('searching', this)">🔍 Searching</button>
+            <button class="nav-btn" onclick="showSection('sorting', this)">🔢 Sorting</button>
         </nav>
 
         <main class="main-content">
@@ -27,7 +27,7 @@
                 </div>
                 
                 <div class="cards-grid">
-                    <div class="feature-card" onclick="showSection('searching')">
+                    <div class="feature-card" onclick="showSection('searching', null)">
                         <div class="card-icon">🔍</div>
                         <h3>Searching Algorithms</h3>
                         <p>Visualize Linear Search and Binary Search with step-by-step iterations</p>
@@ -37,7 +37,7 @@
                         </ul>
                     </div>
 
-                    <div class="feature-card" onclick="showSection('sorting')">
+                    <div class="feature-card" onclick="showSection('sorting', null)">
                         <div class="card-icon">🔢</div>
                         <h3>Sorting Algorithms</h3>
                         <p>Watch sorting algorithms in action with color-coded comparisons</p>

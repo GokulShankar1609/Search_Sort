@@ -1,7 +1,7 @@
 let currentSteps = [];
 let currentStepIndex = 0;
 
-function showSection(sectionName) {
+function showSection(sectionName, element) {
     const sections = document.querySelectorAll('.content-section');
     const navBtns = document.querySelectorAll('.nav-btn');
     
@@ -9,7 +9,20 @@ function showSection(sectionName) {
     navBtns.forEach(btn => btn.classList.remove('active'));
     
     document.getElementById(`${sectionName}-section`).classList.add('active');
-    event.target.classList.add('active');
+    
+    if (element) {
+        element.classList.add('active');
+    } else {
+        const navButtonMap = {
+            'home': 0,
+            'searching': 1,
+            'sorting': 2
+        };
+        const btnIndex = navButtonMap[sectionName];
+        if (btnIndex !== undefined && navBtns[btnIndex]) {
+            navBtns[btnIndex].classList.add('active');
+        }
+    }
 }
 
 async function handleCSVUpload(type) {
