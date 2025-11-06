@@ -1,28 +1,83 @@
 let currentSteps = [];
 let currentStepIndex = 0;
+let currentAlgorithmResult = null;
 
 function showSection(sectionName, element) {
     const sections = document.querySelectorAll('.content-section');
-    const navBtns = document.querySelectorAll('.nav-btn');
-    
     sections.forEach(section => section.classList.remove('active'));
-    navBtns.forEach(btn => btn.classList.remove('active'));
-    
     document.getElementById(`${sectionName}-section`).classList.add('active');
-    
-    if (element) {
-        element.classList.add('active');
-    } else {
-        const navButtonMap = {
-            'home': 0,
-            'searching': 1,
-            'sorting': 2
-        };
-        const btnIndex = navButtonMap[sectionName];
-        if (btnIndex !== undefined && navBtns[btnIndex]) {
-            navBtns[btnIndex].classList.add('active');
-        }
+}
+
+function downloadReport() {
+    if (!currentAlgorithmResult) {
+        alert('No algorithm results to download. Please run an algorithm first.');
+        return;
     }
+    
+    const report = {
+        algorithmName: currentAlgorithmResult.algorithmName,
+        executionTime: currentAlgorithmResult.executionTimeMs + ' ms',
+        timeComplexity: currentAlgorithmResult.timeComplexity,
+        spaceComplexity: currentAlgorithmResult.spaceComplexity,
+        bestCase: currentAlgorithmResult.bestCase,
+        averageCase: currentAlgorithmResult.averageCase,
+        worstCase: currentAlgorithmResult.worstCase,
+        description: currentAlgorithmResult.description,
+        recommendation: currentAlgorithmResult.recommendation || 'N/A',
+        totalIterations: currentAlgorithmResult.steps.length,
+        iterations: currentAlgorithmResult.steps.map(step => ({
+            iteration: step.iteration,
+            arrayState: step.array,
+            action: step.action
+        }))
+    };
+    
+    const jsonStr = JSON.stringify(report, null, 2);
+    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${currentAlgorithmResult.algorithmName.replace(/\s+/g, '_')}_Report.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+function downloadCSVReport() {
+    if (!currentAlgorithmResult) {
+        alert('No algorithm results to download. Please run an algorithm first.');
+        return;
+    }
+    
+    let csv = 'Algorithm Analysis Report\n\n';
+    csv += 'Algorithm Name,' + currentAlgorithmResult.algorithmName + '\n';
+    csv += 'Execution Time,' + currentAlgorithmResult.executionTimeMs + ' ms\n';
+    csv += 'Time Complexity,' + currentAlgorithmResult.timeComplexity + '\n';
+    csv += 'Space Complexity,' + currentAlgorithmResult.spaceComplexity + '\n';
+    csv += 'Best Case,' + currentAlgorithmResult.bestCase + '\n';
+    csv += 'Average Case,' + currentAlgorithmResult.averageCase + '\n';
+    csv += 'Worst Case,' + currentAlgorithmResult.worstCase + '\n';
+    csv += 'Description,' + currentAlgorithmResult.description + '\n';
+    csv += 'Recommendation,' + (currentAlgorithmResult.recommendation || 'N/A') + '\n\n';
+    
+    csv += 'Iteration Details\n';
+    csv += 'Iteration,Array State,Action\n';
+    currentAlgorithmResult.steps.forEach(step => {
+        const arrayStr = '[' + step.array.join(' ') + ']';
+        const action = step.action.replace(/,/g, ';');
+        csv += step.iteration + ',' + arrayStr + ',"' + action + '"\n';
+    });
+    
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${currentAlgorithmResult.algorithmName.replace(/\s+/g, '_')}_Report.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 }
 
 async function handleCSVUpload(type) {
@@ -123,6 +178,7 @@ function showLoading(containerId) {
 function displaySearchResult(result) {
     currentSteps = result.steps;
     currentStepIndex = 0;
+    currentAlgorithmResult = result;
     
     const container = document.getElementById('search-visualization');
     container.innerHTML = `
@@ -161,6 +217,8 @@ function displaySearchResult(result) {
         <div style="text-align: center; margin: 20px 0;">
             <button class="algo-btn" onclick="previousStep()" style="min-width: 120px;">⬅️ Previous</button>
             <button class="algo-btn" onclick="nextStep()" style="min-width: 120px;">Next ➡️</button>
+            <button class="download-report-btn" onclick="downloadCSVReport()">📥 Download CSV Report</button>
+            <button class="download-report-btn" onclick="downloadReport()">📥 Download JSON Report</button>
         </div>
 
         <div class="complexity-card">
@@ -206,6 +264,7 @@ function displaySearchResult(result) {
 function displaySortResult(result) {
     currentSteps = result.steps;
     currentStepIndex = 0;
+    currentAlgorithmResult = result;
     
     const container = document.getElementById('sort-visualization');
     container.innerHTML = `
@@ -244,6 +303,8 @@ function displaySortResult(result) {
         <div style="text-align: center; margin: 20px 0;">
             <button class="algo-btn" onclick="previousStep()" style="min-width: 120px;">⬅️ Previous</button>
             <button class="algo-btn" onclick="nextStep()" style="min-width: 120px;">Next ➡️</button>
+            <button class="download-report-btn" onclick="downloadCSVReport()">📥 Download CSV Report</button>
+            <button class="download-report-btn" onclick="downloadReport()">📥 Download JSON Report</button>
         </div>
 
         <div class="complexity-card">

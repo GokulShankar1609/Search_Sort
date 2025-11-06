@@ -13,11 +13,6 @@
             <p class="header-subtitle">Interactive Step-by-Step Algorithm Analysis</p>
         </header>
 
-        <nav class="navigation">
-            <button class="nav-btn active" onclick="showSection('home', this)">🏠 Home</button>
-            <button class="nav-btn" onclick="showSection('searching', this)">🔍 Searching</button>
-            <button class="nav-btn" onclick="showSection('sorting', this)">🔢 Sorting</button>
-        </nav>
 
         <main class="main-content">
             <section id="home-section" class="content-section active">
@@ -53,6 +48,10 @@
             </section>
 
             <section id="searching-section" class="content-section">
+                <div class="back-button-container">
+                    <button class="back-btn" onclick="showSection('home', null)">⬅️ Back to Home</button>
+                </div>
+                
                 <div class="control-panel">
                     <h2>Searching Algorithms</h2>
                     
@@ -81,6 +80,10 @@
             </section>
 
             <section id="sorting-section" class="content-section">
+                <div class="back-button-container">
+                    <button class="back-btn" onclick="showSection('home', null)">⬅️ Back to Home</button>
+                </div>
+                
                 <div class="control-panel">
                     <h2>Sorting Algorithms</h2>
                     
