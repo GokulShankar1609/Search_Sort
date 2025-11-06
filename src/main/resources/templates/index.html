@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm Visualization Dashboard</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="header">
+            <h1 class="header-title">🎯 Algorithm Visualization Dashboard</h1>
+            <p class="header-subtitle">Interactive Step-by-Step Algorithm Analysis</p>
+        </header>
+
+        <nav class="navigation">
+            <button class="nav-btn active" onclick="showSection('home')">🏠 Home</button>
+            <button class="nav-btn" onclick="showSection('searching')">🔍 Searching</button>
+            <button class="nav-btn" onclick="showSection('sorting')">🔢 Sorting</button>
+        </nav>
+
+        <main class="main-content">
+            <section id="home-section" class="content-section active">
+                <div class="welcome-card">
+                    <h2>Welcome to Algorithm Visualizer</h2>
+                    <p>Select a category to begin exploring algorithms with real-time visualization</p>
+                </div>
+                
+                <div class="cards-grid">
+                    <div class="feature-card" onclick="showSection('searching')">
+                        <div class="card-icon">🔍</div>
+                        <h3>Searching Algorithms</h3>
+                        <p>Visualize Linear Search and Binary Search with step-by-step iterations</p>
+                        <ul>
+                            <li>Linear Search</li>
+                            <li>Binary Search</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card" onclick="showSection('sorting')">
+                        <div class="card-icon">🔢</div>
+                        <h3>Sorting Algorithms</h3>
+                        <p>Watch sorting algorithms in action with color-coded comparisons</p>
+                        <ul>
+                            <li>Bubble Sort</li>
+                            <li>Selection Sort</li>
+                            <li>Insertion Sort</li>
+                            <li>Merge Sort</li>
+                            <li>Quick Sort</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="searching-section" class="content-section">
+                <div class="control-panel">
+                    <h2>Searching Algorithms</h2>
+                    
+                    <div class="input-group">
+                        <label>Array Input:</label>
+                        <input type="text" id="search-array" placeholder="e.g., 5, 3, 8, 1, 9, 2" value="5, 3, 8, 1, 9, 2, 7, 4, 6">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Target Value:</label>
+                        <input type="number" id="search-target" placeholder="e.g., 7" value="7">
+                    </div>
+
+                    <div class="file-upload">
+                        <label>Or Upload CSV File:</label>
+                        <input type="file" id="search-csv" accept=".csv" onchange="handleCSVUpload('search')">
+                    </div>
+
+                    <div class="algorithm-buttons">
+                        <button class="algo-btn" onclick="runSearchAlgorithm('linear')">Linear Search</button>
+                        <button class="algo-btn" onclick="runSearchAlgorithm('binary')">Binary Search</button>
+                    </div>
+                </div>
+
+                <div id="search-visualization" class="visualization-area"></div>
+            </section>
+
+            <section id="sorting-section" class="content-section">
+                <div class="control-panel">
+                    <h2>Sorting Algorithms</h2>
+                    
+                    <div class="input-group">
+                        <label>Array Input:</label>
+                        <input type="text" id="sort-array" placeholder="e.g., 64, 34, 25, 12, 22, 11, 90" value="64, 34, 25, 12, 22, 11, 90">
+                    </div>
+
+                    <div class="file-upload">
+                        <label>Or Upload CSV File:</label>
+                        <input type="file" id="sort-csv" accept=".csv" onchange="handleCSVUpload('sort')">
+                    </div>
+
+                    <div class="algorithm-buttons">
+                        <button class="algo-btn" onclick="runSortAlgorithm('bubble')">Bubble Sort</button>
+                        <button class="algo-btn" onclick="runSortAlgorithm('selection')">Selection Sort</button>
+                        <button class="algo-btn" onclick="runSortAlgorithm('insertion')">Insertion Sort</button>
+                        <button class="algo-btn" onclick="runSortAlgorithm('merge')">Merge Sort</button>
+                        <button class="algo-btn" onclick="runSortAlgorithm('quick')">Quick Sort</button>
+                    </div>
+                </div>
+
+                <div id="sort-visualization" class="visualization-area"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>
