@@ -56,7 +56,7 @@ public class AlgorithmController {
         return sortingService.quickSort(request.getArray());
     }
 
-    @PostMapping("/upload/csv")
+    @PostMapping("/uplaod/csv")
     public int[] uploadCSV(@RequestParam("file") MultipartFile file) {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));

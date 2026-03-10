@@ -80,27 +80,32 @@ function downloadCSVReport() {
     URL.revokeObjectURL(url);
 }
 
-async function handleCSVUpload(type) {
-    const fileInput = document.getElementById(`${type}-csv`);
-    const file = fileInput.files[0];
-    
-    if (!file) return;
-    
-    const formData = new FormData();
-    formData.append('file', file);
-    
+let uploadedArray = [];
+
+// Function to handle CSV file input
+async function handleCSVUploadFromUser(file) {
+    if (!file) {
+        alert('No CSV file selected.');
+        return;
+    }
+
     try {
-        const response = await fetch('/api/upload/csv', {
-            method: 'POST',
-            body: formData
-        });
-        
-        const array = await response.json();
-        document.getElementById(`${type}-array`).value = array.join(', ');
+        const text = await file.text();
+
+        // Parse CSV: split by commas and convert to numbers
+        uploadedArray = text.split(',')
+                            .map(x => parseInt(x.trim()))
+                            .filter(x => !isNaN(x));
+
+        console.log('Uploaded Array:', uploadedArray);
+        // Optionally, you can set it to your input fields
+        document.getElementById('sort-array').value = uploadedArray.join(', ');
+        document.getElementById('search-array').value = uploadedArray.join(', ');
     } catch (error) {
-        alert('Error uploading CSV file: ' + error.message);
+        alert('Error reading CSV file: ' + error.message);
     }
 }
+runSearchAlgorithm
 
 function parseArray(input) {
     return input.split(',').map(x => parseInt(x.trim())).filter(x => !isNaN(x));

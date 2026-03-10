@@ -3,24 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Algorithm Visualization Dashboard</title>
+    
+    <!-- ⭐ Updated Title here -->
+    <title>Searching & Sorting Visualizer – Interactive Algorithm Playground</title>
+
     <link rel="stylesheet" href="/css/styles.css">
 </head>
+
 <body>
     <div class="dashboard-container">
         <header class="header">
-            <h1 class="header-title">🎯 Algorithm Visualization Dashboard</h1>
-            <p class="header-subtitle">Interactive Step-by-Step Algorithm Analysis</p>
+            <h1 class="header-title">🔍 Searching and Sorting Visualizer</h1>
+            <p class="header-subtitle">Visualize sorting, searching, and more</p>
         </header>
-
 
         <main class="main-content">
             <section id="home-section" class="content-section active">
                 <div class="welcome-card">
-                    <h2>Welcome to Algorithm Visualizer</h2>
+                    <h2>Welcome to Searching and Sorting Visualizer Visualizer</h2>
                     <p>Select a category to begin exploring algorithms with real-time visualization</p>
                 </div>
-                
+
                 <div class="cards-grid">
                     <div class="feature-card" onclick="showSection('searching', null)">
                         <div class="card-icon">🔍</div>
@@ -51,10 +54,10 @@
                 <div class="back-button-container">
                     <button class="back-btn" onclick="showSection('home', null)">⬅️ Back to Home</button>
                 </div>
-                
+
                 <div class="control-panel">
                     <h2>Searching Algorithms</h2>
-                    
+
                     <div class="input-group">
                         <label>Array Input:</label>
                         <input type="text" id="search-array" placeholder="e.g., 5, 3, 8, 1, 9, 2" value="5, 3, 8, 1, 9, 2, 7, 4, 6">
@@ -83,10 +86,10 @@
                 <div class="back-button-container">
                     <button class="back-btn" onclick="showSection('home', null)">⬅️ Back to Home</button>
                 </div>
-                
+
                 <div class="control-panel">
                     <h2>Sorting Algorithms</h2>
-                    
+
                     <div class="input-group">
                         <label>Array Input:</label>
                         <input type="text" id="sort-array" placeholder="e.g., 64, 34, 25, 12, 22, 11, 90" value="64, 34, 25, 12, 22, 11, 90">
